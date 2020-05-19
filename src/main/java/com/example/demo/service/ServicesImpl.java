@@ -74,7 +74,7 @@ public class ServicesImpl implements Services
 				throw new RuntimeException("No Topic found");
 			}
 			
-			if(deadLine < 300000 && tableUser.getTableUserKey().equals(key))
+			if(tableUser.getTableUserKey().equals(key))
 			{
 				tableUser.setTableUserKey(null);
 				updateUserStatus(tableUser);
@@ -85,14 +85,6 @@ public class ServicesImpl implements Services
 			{
 				return null;
 			}
-			else if(deadLine >= 300000)
-			{
-				tableUser.setTableUserKey(null);
-				updateUserStatus(tableUser);
-				timer.purge();
-				return tableTopic;
-			}
-			
 			
 		}
 		
