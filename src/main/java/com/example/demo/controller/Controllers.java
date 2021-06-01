@@ -17,6 +17,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,49 +39,53 @@ public class Controllers {
 	    Services service;
 	    
 	   
-	    
+	    @GetMapping("/*")
+	    public String createUser()
+	    { 
+	    	return "<h1>Welcome</h1>";
+	    }
 	    
 	    //**************************CART SESSION ENTRY************************************
-	    @PostMapping("/getpdffortopic")
-	    @Produces(MediaType.APPLICATION_PDF_VALUE)
-	    public ResponseEntity<InputStreamResource> getPdfForTopic(@RequestBody InputDataDto inputDataDto)
-	    {
-	    	Document document = new Document();
-	    	TableTopic tableTopic = service.getPdfForTopic(inputDataDto);
-	    	if(tableTopic != null)
-	    	{
-		    	 PdfWriter writer = null;
-		    	 ByteArrayOutputStream out = new ByteArrayOutputStream();
-		    	
-		    	try
-		        {
-		    	   writer = PdfWriter.getInstance(document, out);
-		           document.open();
-		           Paragraph paragraph = new Paragraph();
-		           paragraph.add(tableTopic.getTableTopicData());
-		           document.add(paragraph);
-		           document.close();
-		           writer.close();
-		    		
-		        } catch (DocumentException e)
-		        {
-		           e.printStackTrace();
-		        }
-		    	
-		    	ByteArrayInputStream  bis = new ByteArrayInputStream(out.toByteArray());
-		    	
-		    	
-		    	HttpHeaders headers = new HttpHeaders();
-		        headers.add("Content-Disposition", "inline; filename=assignment.pdf");
-	
-		        return ResponseEntity
-		                .ok()
-		                .headers(headers)
-		                .contentType(MediaType.APPLICATION_PDF)
-		                .body(new InputStreamResource(bis));
-		    }
-	    	
-	    	return null;
-	    }
+//	    @PostMapping("/getpdffortopic")
+//	    @Produces(MediaType.APPLICATION_PDF_VALUE)
+//	    public ResponseEntity<InputStreamResource> getPdfForTopic(@RequestBody InputDataDto inputDataDto)
+//	    {
+//	    	Document document = new Document();
+//	    	TableTopic tableTopic = service.getPdfForTopic(inputDataDto);
+//	    	if(tableTopic != null)
+//	    	{
+//		    	 PdfWriter writer = null;
+//		    	 ByteArrayOutputStream out = new ByteArrayOutputStream();
+//		    	
+//		    	try
+//		        {
+//		    	   writer = PdfWriter.getInstance(document, out);
+//		           document.open();
+//		           Paragraph paragraph = new Paragraph();
+//		           paragraph.add(tableTopic.getTableTopicData());
+//		           document.add(paragraph);
+//		           document.close();
+//		           writer.close();
+//		    		
+//		        } catch (DocumentException e)
+//		        {
+//		           e.printStackTrace();
+//		        }
+//		    	
+//		    	ByteArrayInputStream  bis = new ByteArrayInputStream(out.toByteArray());
+//		    	
+//		    	
+//		    	HttpHeaders headers = new HttpHeaders();
+//		        headers.add("Content-Disposition", "inline; filename=assignment.pdf");
+//	
+//		        return ResponseEntity
+//		                .ok()
+//		                .headers(headers)
+//		                .contentType(MediaType.APPLICATION_PDF)
+//		                .body(new InputStreamResource(bis));
+//		    }
+//	    	
+//	    	return null;
+//	    }
 	    
 }
